@@ -493,6 +493,7 @@ def main():
             
     # Clean file name generator
     payload_counter = 0
+    last_session_check_time = 0
 
     try:
         while True:
@@ -511,6 +512,104 @@ def main():
                 break
                 
             windows = active_windows
+                
+            # Periodically check session/merchant validity (every 60 seconds)
+            current_time = time.time()
+            if current_time - last_session_check_time > 60:
+                last_session_check_time = current_time
+                if active_windows:
+                    test_handle = active_windows[0]
+                    try:
+                        driver.switch_to.window(test_handle)
+                        curr_url = driver.current_url.lower()
+                        
+                        # Detect logout state
+                        is_logged_out = (
+                            "/login" in curr_url or 
+                            "/authenticate/login" in curr_url or 
+                            "about:blank" in curr_url
+                        )
+                        
+                        # Retrieve active merchant name via API
+                        active_name = "Unknown Merchant"
+                        if not is_logged_out:
+                            try:
+                                api_js = """
+                                var done = arguments[arguments.length - 1];
+                                let token = document.cookie.split('; ').find(row => row.startsWith('shopee_tob_token='))?.split('=')[1];
+                                fetch('https://api.partner.shopee.co.id/nb/mss/web-api/PartnerAccountServer/GetUserInfo', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'x-merchant-token': token || '',
+                                        'x-merchant-language': 'id',
+                                        'x-merchant-login-from': '12'
+                                    },
+                                    body: '{}',
+                                    credentials: 'include'
+                                })
+                                .then(r => r.json())
+                                .then(j => done(j.data || null))
+                                .catch(() => done(null));
+                                """
+                                driver.set_script_timeout(10)
+                                user_data = driver.execute_async_script(api_js)
+                                if user_data:
+                                    active_name = user_data.get("merchantName") or "Unknown Merchant"
+                            except:
+                                pass
+                                
+                        is_unknown_merchant = (
+                            active_name.lower().strip() == "unknown merchant" or 
+                            active_name.lower().strip() == "admin"
+                        )
+                        
+                        if is_logged_out or is_unknown_merchant:
+                            print(f"⚠️ [SESSION LOST] Invalid state detected (URL: {curr_url}, Merchant: {active_name}).")
+                            
+                            # Attempt cookie recovery first if logged out
+                            recovered = False
+                            if is_logged_out:
+                                print("🔄 Attempting cookie-based logout recovery...")
+                                recovered = browser._detect_and_recover_logout(driver)
+                                
+                            # If not recovered, trigger full relogin
+                            if not recovered:
+                                print("🔄 Triggering deliberate logout & relogin recovery...")
+                                recovered = browser._deliberate_logout_and_relogin(
+                                    driver,
+                                    username=username,
+                                    password=password,
+                                    phone=phone
+                                )
+                                
+                            if recovered:
+                                print("✅ [SESSION RECOVERY] Session successfully recovered! Re-navigating all windows to their settings pages...")
+                                for w_idx, w_handle in enumerate(windows, 1):
+                                    try:
+                                        driver.switch_to.window(w_handle)
+                                        target_url = base_url + store_ids[w_idx - 1]
+                                        driver.get(target_url)
+                                        time.sleep(2)
+                                        # Re-inject interceptor
+                                        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
+                                        driver.execute_script(MONKEYPATCH_JS)
+                                        print(f"  ✅ Window {w_idx} successfully restored and interceptor injected.")
+                                    except Exception as e:
+                                        print(f"  ⚠️ Failed to restore Window {w_idx}: {e}")
+                                        
+                                # Reset last URLs tracking to capture navigation correctly
+                                last_page_urls = {}
+                                for w_handle in windows:
+                                    try:
+                                        driver.switch_to.window(w_handle)
+                                        last_page_urls[w_handle] = driver.current_url
+                                    except:
+                                        pass
+                            else:
+                                print("❌ [SESSION RECOVERY] Relogin recovery failed. Will retry on next check cycle.")
+                    except Exception as e:
+                        print(f"⚠️ Error during session health check: {e}")
                 
             # Log URL changes per window
             for idx, handle in enumerate(windows, 1):
