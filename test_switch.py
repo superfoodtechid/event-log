@@ -6,9 +6,9 @@ Test script to open the Shopee Partner Dashboard, inject the network interceptor
 and perform a merchant switch to target: "SuperFood ." while capturing network traffic.
 
 Usage:
-    /home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python test_switch.py [account_name]
+    .venv/bin/python test_switch.py [account_name]
 Example:
-    /home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python test_switch.py superfoodapp
+    .venv/bin/python test_switch.py superfoodapp
 """
 
 import os

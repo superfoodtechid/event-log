@@ -54,31 +54,31 @@ Skrip ini memisahkan proses inisialisasi sesi dengan perpindahan merchant agar d
 
 ### Cara Menjalankan Tes:
 ```bash
-/home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python test_switch.py [nama_akun]
+./.venv/bin/python test_switch.py [nama_akun]
 ```
 Contoh menggunakan profil akun `superfoodapp`:
 ```bash
-/home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python test_switch.py superfoodapp
+./.venv/bin/python test_switch.py superfoodapp
 ```
 
 ---
 
 ## 🚀 Cara Menjalankan Penangkap Traffic Utama
 
-Gunakan virtual environment bawaan dari baseline project yang telah terpasang modul `selenium` dan `requests`:
+Gunakan virtual environment lokal yang telah terpasang modul `selenium`, `webdriver-manager`, dan `requests`:
 
 ```bash
 # Masuk ke direktori project
 cd /home/akbarhann/project/event-log-capture
 
 # Jalankan script capture_events.py
-/home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python capture_events.py
+./.venv/bin/python capture_events.py
 ```
 
 ### Opsi Tambahan:
 Kamu bisa menentukan nama akun target secara langsung melalui argumen CLI:
 ```bash
-/home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python capture_events.py auto7307
+./.venv/bin/python capture_events.py auto7307
 ```
 Jika tidak ada argumen nama akun yang dilewatkan, script akan otomatis mendeteksi sesi yang tersedia di folder `data/` dan menampilkan menu interaktif untuk dipilih.
 

@@ -6,9 +6,9 @@ Sniffs, intercepts, and logs network events (API fetch/XHR requests and WebSocke
 on the Shopee Partner Dashboard to investigate outlet temporary closures.
 
 Usage:
-    /home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python capture_events.py <account_name>
+    .venv/bin/python capture_events.py <account_name>
 Example:
-    /home/akbarhann/project/FoodMaster/baseline/src/.venv/bin/python capture_events.py auto7307
+    .venv/bin/python capture_events.py auto7307
 """
 
 import os

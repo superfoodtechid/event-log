@@ -1,0 +1,17 @@
+[Unit]
+Description=Shopee Partner Event Log Capture Service
+After=network.target
+
+[Service]
+Type=simple
+User=akbarhann
+WorkingDirectory=/home/akbarhann/project/event-log-capture
+ExecStart=/home/akbarhann/project/event-log-capture/.venv/bin/python capture_events.py allvbadmin
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
