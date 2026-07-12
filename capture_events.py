@@ -443,35 +443,38 @@ def main():
         driver.get(dashboard_url)
         time.sleep(3)
 
+    # ── Inject Monkeypatch on document creation for Window 1 before navigation ──
+    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
+
     # Navigasi Window 1 ke store ID pertama
     url1 = base_url + store_ids[0]
     print(f"🔄 Navigating Window 1 to business hours settings (Store ID: {store_ids[0]}): {url1}")
     driver.get(url1)
     time.sleep(2)
+    try:
+        driver.execute_script(MONKEYPATCH_JS)
+    except:
+        pass
 
     # Open 2 additional windows dan arahkan masing-masing ke store berikutnya
     print("🌐 Opening 2 additional windows (total 3 windows)...")
     windows = [driver.current_window_handle]
     for i in range(2):
         driver.switch_to.new_window('window')
+        # Inject monkeypatch into the new window BEFORE navigation
+        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
+        
         url = base_url + store_ids[i + 1]
         print(f"🔄 Navigating Window {i + 2} to business hours settings (Store ID: {store_ids[i + 1]}): {url}")
         driver.get(url)
         windows.append(driver.current_window_handle)
         time.sleep(2)
-        
-    print(f"✅ Total windows opened: {len(windows)}")
-    
-    # ── Inject Monkeypatch on document creation & current page for all windows ──
-    print("💉 Injecting network interceptor into all windows...")
-    for idx, handle in enumerate(windows, 1):
-        driver.switch_to.window(handle)
-        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
         try:
             driver.execute_script(MONKEYPATCH_JS)
-            print(f"  ✅ Interceptor injected on Window {idx}")
-        except Exception as e:
-            print(f"  ⚠️ Injection warning on Window {idx}: {e}")
+        except:
+            pass
+        
+    print(f"✅ Total windows opened: {len(windows)}")
 
     print()
     print("=" * 70)
@@ -588,12 +591,16 @@ def main():
                                 for w_idx, w_handle in enumerate(windows, 1):
                                     try:
                                         driver.switch_to.window(w_handle)
+                                        # Register interceptor BEFORE navigation
+                                        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
+                                        
                                         target_url = base_url + store_ids[w_idx - 1]
                                         driver.get(target_url)
                                         time.sleep(2)
-                                        # Re-inject interceptor
-                                        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
-                                        driver.execute_script(MONKEYPATCH_JS)
+                                        try:
+                                            driver.execute_script(MONKEYPATCH_JS)
+                                        except:
+                                            pass
                                         print(f"  ✅ Window {w_idx} successfully restored and interceptor injected.")
                                     except Exception as e:
                                         print(f"  ⚠️ Failed to restore Window {w_idx}: {e}")
