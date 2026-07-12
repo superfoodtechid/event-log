@@ -279,6 +279,86 @@ MONKEYPATCH_JS = """
 """
 
 
+def compile_snippets(url, method, status, req_body, res_body):
+    # Initialize default snippets
+    req_snippet = (req_body[:150] + "...") if len(req_body) > 150 else req_body
+    res_snippet = (res_body[:150] + "...") if len(res_body) > 150 else res_body
+    
+    clean_url = url.split("?")[0]
+    
+    # 1. Parse JSON payloads if possible
+    req_json = None
+    res_json = None
+    if req_body.strip():
+        try:
+            req_json = json.loads(req_body)
+        except:
+            pass
+    if res_body.strip():
+        try:
+            res_json = json.loads(res_body)
+        except:
+            pass
+            
+    # 2. Add prefixes for store status action URLs
+    if "/opening-status/action/pause" in clean_url:
+        info_parts = []
+        if req_json:
+            duration = req_json.get("duration")
+            reason = req_json.get("reason")
+            pause_type = req_json.get("pause_type")
+            if duration is not None:
+                info_parts.append(f"duration={duration}s")
+            if reason is not None:
+                info_parts.append(f"reason={reason}")
+            if pause_type is not None:
+                info_parts.append(f"pause_type={pause_type}")
+        req_snippet = f"[ACTION PAUSE] " + (", ".join(info_parts) if info_parts else req_snippet)
+        
+    elif "/opening-status/action/open" in clean_url:
+        req_snippet = "[ACTION OPEN] Requesting store opening"
+        
+    elif "/api/seller/store" in clean_url:
+        info_parts = []
+        if req_json:
+            store_id = req_json.get("store_id") or req_json.get("storeId")
+            if store_id:
+                info_parts.append(f"store_id={store_id}")
+        req_snippet = f"[STORE DETAILED INFO] " + (", ".join(info_parts) if info_parts else req_snippet)
+
+    # 3. Add prefixes for HTTP/API errors
+    if status:
+        try:
+            status_int = int(status)
+            if status_int >= 400:
+                res_snippet = f"[HTTP ERROR {status_int}] {res_snippet}"
+        except ValueError:
+            pass
+            
+    if res_json and isinstance(res_json, dict):
+        code = res_json.get("code")
+        err_code = res_json.get("err_code")
+        msg = res_json.get("msg") or res_json.get("message") or res_json.get("err_msg")
+        
+        has_error = False
+        err_info = ""
+        if code is not None and code != 0:
+            has_error = True
+            err_info = f"code={code}"
+        elif err_code is not None and err_code != 0:
+            has_error = True
+            err_info = f"err_code={err_code}"
+            
+        if msg and any(keyword in str(msg).lower() for keyword in ["err", "fail", "expire", "invalid", "deny", "limit", "block"]):
+            has_error = True
+            
+        if has_error:
+            msg_str = f" msg='{msg}'" if msg else ""
+            res_snippet = f"[API ERROR {err_info}{msg_str}] {res_snippet}"
+            
+    return req_snippet, res_snippet
+
+
 def main():
     account_name = select_account()
     print(f"\n🎯 Target Account: {account_name}")
@@ -446,13 +526,14 @@ def main():
                             writer.writerow([
                                 timestamp,
                                 "url_change",
-                                f"NAVIGATION_WINDOW_{idx}",
+                                "NAVIGATION",
                                 current_url,
+                                "200",
                                 "",
                                 "",
                                 "",
-                                "",
-                                current_url
+                                current_url,
+                                f"Window {idx}"
                             ])
                         last_page_urls[handle] = current_url
                         
@@ -496,9 +577,8 @@ def main():
                     res_body = log_item.get("response_body", "")
                     page_url = log_item.get("page_url", "")
                     
-                    # Formatting snippets for stdout and CSV summary
-                    req_snippet = (req_body[:150] + "...") if len(req_body) > 150 else req_body
-                    res_snippet = (res_body[:150] + "...") if len(res_body) > 150 else res_body
+                    # Formatting snippets for stdout and CSV summary with advanced info parsing
+                    req_snippet, res_snippet = compile_snippets(url, method, status, req_body, res_body)
                     
                     # Highlight important events (e.g. status changes, errors, outlet close events)
                     # Let's inspect url and body for patterns related to store closing/status
