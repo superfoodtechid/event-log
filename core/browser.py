@@ -650,8 +650,8 @@ def extract_tokens_from_driver(driver) -> tuple:
         try: 
             # Try API first (Most accurate) - using full URL and credentials
             api_js = """
-            var done = arguments[arguments.length - 1];
-            let token = document.cookie.split('; ').find(row => row.startsWith('shopee_tob_token='))?.split('=')[1];
+            var token = arguments[0];
+            var done = arguments[1];
             fetch('https://api.partner.shopee.co.id/nb/mss/web-api/PartnerAccountServer/GetUserInfo', {
                 method: 'POST',
                 headers: {
@@ -665,7 +665,12 @@ def extract_tokens_from_driver(driver) -> tuple:
             .then(j => done(j.data ? j.data.merchantId : null))
             .catch(() => done(null));
             """
-            entity_id = driver.execute_async_script(api_js)
+            token = ""
+            for c in driver.get_cookies():
+                if c["name"] == "shopee_tob_token":
+                    token = c["value"]
+                    break
+            entity_id = driver.execute_async_script(api_js, token)
         except: pass
 
     if not entity_id:
@@ -1605,9 +1610,14 @@ def get_session(username=None, password=None, phone=None, headless=True, close_b
             active_id = None
             active_name = "Unknown Merchant"
             try:
+                token = ""
+                for c in driver.get_cookies():
+                    if c["name"] == "shopee_tob_token":
+                        token = c["value"]
+                        break
                 api_js = """
-                var done = arguments[arguments.length - 1];
-                let token = document.cookie.split('; ').find(row => row.startsWith('shopee_tob_token='))?.split('=')[1];
+                var token = arguments[0];
+                var done = arguments[1];
                 fetch('https://api.partner.shopee.co.id/nb/mss/web-api/PartnerAccountServer/GetUserInfo', {
                     method: 'POST',
                     headers: {
@@ -1624,7 +1634,7 @@ def get_session(username=None, password=None, phone=None, headless=True, close_b
                 .catch(() => done(null));
                 """
                 driver.set_script_timeout(10)
-                user_data = driver.execute_async_script(api_js)
+                user_data = driver.execute_async_script(api_js, token)
                 if user_data:
                     active_id = str(user_data.get("merchantId") or "")
                     active_name = user_data.get("merchantName") or "Unknown Merchant"

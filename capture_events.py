@@ -412,9 +412,9 @@ def main():
             password = creds.get("shopee_password")
             phone = creds.get("shopee_phone")
         except Exception as e:
-            print(f"⚠️ Error reading credentials.json: {e}")
+            print(f"Error reading credentials.json: {e}")
 
-    print("🌐 Launching Chrome Browser...")
+    print("Launching Chrome Browser...")
     
     # Run in headless mode
     session_data = browser.get_session(
@@ -427,11 +427,11 @@ def main():
     )
     
     if not session_data or "driver" not in session_data:
-        print("❌ Failed to initiate driver session.")
+        print("Failed to initiate driver session.")
         sys.exit(1)
         
     driver = session_data["driver"]
-    print("✅ Chrome started!")
+    print("Chrome started!")
     
     dashboard_url = "https://partner.shopee.co.id/food/dashboard"
     store_ids = ["21708903", "21830864", "21708892"]
@@ -439,7 +439,7 @@ def main():
     
     # Navigasi ke Shopee Partner Dashboard jika belum di sana untuk verifikasi login
     if "dashboard" not in driver.current_url.lower() and "merchant-selector" not in driver.current_url.lower():
-        print(f"🔄 Navigating Window 1 to Shopee Partner Dashboard to verify login...")
+        print(f"Navigating Window 1 to Shopee Partner Dashboard to verify login...")
         driver.get(dashboard_url)
         time.sleep(3)
 
@@ -448,7 +448,7 @@ def main():
 
     # Navigasi Window 1 ke store ID pertama
     url1 = base_url + store_ids[0]
-    print(f"🔄 Navigating Window 1 to business hours settings (Store ID: {store_ids[0]}): {url1}")
+    print(f"Navigating Window 1 to business hours settings (Store ID: {store_ids[0]}): {url1}")
     driver.get(url1)
     time.sleep(2)
     try:
@@ -457,7 +457,7 @@ def main():
         pass
 
     # Open 2 additional windows dan arahkan masing-masing ke store berikutnya
-    print("🌐 Opening 2 additional windows (total 3 windows)...")
+    print("Opening 2 additional windows (total 3 windows)...")
     windows = [driver.current_window_handle]
     for i in range(2):
         driver.switch_to.new_window('window')
@@ -465,7 +465,7 @@ def main():
         driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": MONKEYPATCH_JS})
         
         url = base_url + store_ids[i + 1]
-        print(f"🔄 Navigating Window {i + 2} to business hours settings (Store ID: {store_ids[i + 1]}): {url}")
+        print(f"Navigating Window {i + 2} to business hours settings (Store ID: {store_ids[i + 1]}): {url}")
         driver.get(url)
         windows.append(driver.current_window_handle)
         time.sleep(2)
@@ -474,11 +474,11 @@ def main():
         except:
             pass
         
-    print(f"✅ Total windows opened: {len(windows)}")
+    print(f"Total windows opened: {len(windows)}")
 
     print()
     print("=" * 70)
-    print("🟢 EVENT CAPTURE ACTIVE. Monitoring Network Traffic in 3 Windows...")
+    print("EVENT CAPTURE ACTIVE. Monitoring Network Traffic in 3 Windows...")
     print("    Feel free to interact with the dashboards.")
     print("    Outlet status changes and API requests will be logged below in real-time.")
     print("    Press Ctrl+C in this terminal to stop and close the browser.")
@@ -511,7 +511,7 @@ def main():
                     pass
             
             if not active_windows:
-                print("\n🔴 All browser windows closed by user.")
+                print("\nAll browser windows closed by user.")
                 break
                 
             windows = active_windows
@@ -537,9 +537,14 @@ def main():
                         active_name = "Unknown Merchant"
                         if not is_logged_out:
                             try:
+                                token = ""
+                                for c in driver.get_cookies():
+                                    if c["name"] == "shopee_tob_token":
+                                        token = c["value"]
+                                        break
                                 api_js = """
-                                var done = arguments[arguments.length - 1];
-                                let token = document.cookie.split('; ').find(row => row.startsWith('shopee_tob_token='))?.split('=')[1];
+                                var token = arguments[0];
+                                var done = arguments[1];
                                 fetch('https://api.partner.shopee.co.id/nb/mss/web-api/PartnerAccountServer/GetUserInfo', {
                                     method: 'POST',
                                     headers: {
@@ -556,7 +561,7 @@ def main():
                                 .catch(() => done(null));
                                 """
                                 driver.set_script_timeout(10)
-                                user_data = driver.execute_async_script(api_js)
+                                user_data = driver.execute_async_script(api_js, token)
                                 if user_data:
                                     active_name = user_data.get("merchantName") or "Unknown Merchant"
                             except:
@@ -568,17 +573,17 @@ def main():
                         )
                         
                         if is_logged_out or is_unknown_merchant:
-                            print(f"⚠️ [SESSION LOST] Invalid state detected (URL: {curr_url}, Merchant: {active_name}).")
+                            print(f"[SESSION LOST] Invalid state detected (URL: {curr_url}, Merchant: {active_name}).")
                             
                             # Attempt cookie recovery first if logged out
                             recovered = False
                             if is_logged_out:
-                                print("🔄 Attempting cookie-based logout recovery...")
+                                print("Attempting cookie-based logout recovery...")
                                 recovered = browser._detect_and_recover_logout(driver)
                                 
                             # If not recovered, trigger full relogin
                             if not recovered:
-                                print("🔄 Triggering deliberate logout & relogin recovery...")
+                                print("Triggering deliberate logout & relogin recovery...")
                                 recovered = browser._deliberate_logout_and_relogin(
                                     driver,
                                     username=username,
@@ -587,7 +592,7 @@ def main():
                                 )
                                 
                             if recovered:
-                                print("✅ [SESSION RECOVERY] Session successfully recovered! Re-navigating all windows to their settings pages...")
+                                print("[SESSION RECOVERY] Session successfully recovered! Re-navigating all windows to their settings pages...")
                                 for w_idx, w_handle in enumerate(windows, 1):
                                     try:
                                         driver.switch_to.window(w_handle)
@@ -601,9 +606,9 @@ def main():
                                             driver.execute_script(MONKEYPATCH_JS)
                                         except:
                                             pass
-                                        print(f"  ✅ Window {w_idx} successfully restored and interceptor injected.")
+                                        print(f"  Window {w_idx} successfully restored and interceptor injected.")
                                     except Exception as e:
-                                        print(f"  ⚠️ Failed to restore Window {w_idx}: {e}")
+                                        print(f"  Failed to restore Window {w_idx}: {e}")
                                         
                                 # Reset last URLs tracking to capture navigation correctly
                                 last_page_urls = {}
@@ -614,9 +619,9 @@ def main():
                                     except:
                                         pass
                             else:
-                                print("❌ [SESSION RECOVERY] Relogin recovery failed. Will retry on next check cycle.")
+                                print("[SESSION RECOVERY] Relogin recovery failed. Will retry on next check cycle.")
                     except Exception as e:
-                        print(f"⚠️ Error during session health check: {e}")
+                        print(f"Error during session health check: {e}")
                 
             # Log URL changes per window
             for idx, handle in enumerate(windows, 1):
@@ -626,7 +631,7 @@ def main():
                     last_url = last_page_urls.get(handle)
                     if current_url != last_url:
                         timestamp = datetime.now().isoformat()
-                        print(f"🔗 [Window {idx} URL CHANGE] -> {current_url}")
+                        print(f"[Window {idx} URL CHANGE] -> {current_url}")
                         with open(csv_file, "a", newline="", encoding="utf-8") as f:
                             writer = csv.writer(f)
                             writer.writerow([
@@ -700,24 +705,25 @@ def main():
                         is_suspicious = True
                         
                     # Print log item in stdout
-                    arrow = "➡️" if "send" in log_type or method == "POST" else "⬅️"
+                    w_idx = log_item.get("window_idx", 1)
+                    arrow = "->" if "send" in log_type or method == "POST" else "<-"
                     status_str = f" [Status: {status}]" if status else ""
                     tag = f"[{log_type.upper()}]"
                     
                     if is_store_status_action:
-                        print(f"🚨🚨 [STORE STATUS ACTION] {tag} {method} {arrow} {clean_url}{status_str}")
+                        print(f"[Window {w_idx}] [STORE STATUS ACTION] {tag} {method} {arrow} {clean_url}{status_str}")
                         if req_body.strip():
                             print(f"   Payload: {req_body}")
                         if res_body.strip():
                             print(f"   Response: {res_body}")
                     elif is_suspicious:
-                        print(f"🔥 {tag} {method} {arrow} {clean_url}{status_str}")
+                        print(f"[Window {w_idx}] [SUSPICIOUS] {tag} {method} {arrow} {clean_url}{status_str}")
                         if req_snippet.strip():
                             print(f"   Payload: {req_snippet}")
                         if res_snippet.strip() and ("receive" in log_type or method != "POST"):
                             print(f"   Response: {res_snippet}")
                     else:
-                        print(f"✨ {tag} {method} {arrow} {clean_url}{status_str}")
+                        print(f"[Window {w_idx}] {tag} {method} {arrow} {clean_url}{status_str}")
                         
                     # Save full payload to JSON if body exists
                     payload_file_rel = ""
