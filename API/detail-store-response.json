@@ -1,0 +1,148 @@
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "store": {
+            "id": "21830864",
+            "name": "Nasi Padang Istimewa, Foodnesia",
+            "merchant_id": "11511947",
+            "tag_id": "0",
+            "brand_id": "1271575",
+            "is_use_wallet": 1,
+            "is_use_merchant_app": 1,
+            "location": {
+                "state": "JAWA TIMUR",
+                "city": "KOTA MALANG",
+                "district": "LOWOKWARU",
+                "address": "Jl. Borobudur ,No.45(RM Ampera Tunas Harapan), Mojolangu, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142,No.45",
+                "latitude": -7.9390182,
+                "longitude": 112.63423,
+                "precise_latitude": -7.93901832,
+                "precise_longitude": 112.63423511
+            },
+            "postal_code": "65142",
+            "email": "superfoodteam.id@gmail.com",
+            "logo": "id-11134506-8224v-mjxoapcy6u4nf1",
+            "banner": "id-11134506-822wg-mmcp1f30rxtu7e",
+            "partner_type": 2,
+            "commission_rate": 2500,
+            "tax_rate": 0,
+            "service_fee": "0",
+            "min_spend": "0",
+            "delivery_distance": 25000,
+            "register_time": 1729480579162,
+            "preparation_time": 900000,
+            "contact_phone": "6281388120242",
+            "status": 2,
+            "status_reason": 0,
+            "status_reason_remark": "",
+            "auto_confirmed": 1,
+            "auto_confirmed_enabled": 0,
+            "rating_total": 17,
+            "rating_score": 4.9,
+            "opening_status": 3,
+            "surcharge_intervals": [
+                {
+                    "order_price_end": 0,
+                    "fee": 0
+                }
+            ],
+            "service_charge_fee_rate": 0,
+            "driver_modify_order_enabled": 0,
+            "delivery_distance_mode": 1,
+            "business_info_added": 1,
+            "is_instant_prep": 1,
+            "flag": {
+                "overtime_order_mode": 0,
+                "is_super_menu": 0,
+                "required_receipt_photo": 0,
+                "edit_menu_enabled": 1,
+                "hide_dish_note_enabled": 0,
+                "auto_print_disabled": 1,
+                "edit_promotion_enabled": 1,
+                "show_buyer_halal_type": 0,
+                "hide_processing_fee": 0,
+                "special_mode_store_close": 0,
+                "special_mode_delivery_distance": 0,
+                "special_mode_store_dff": 0,
+                "display_order_amount": 0,
+                "not_use_refund_center": 0,
+                "edit_ads_enabled": 0,
+                "cancel_order_enabled": 1,
+                "is_premium_delivery_blacklist": 0,
+                "skip_sending_auto_chargeback_email": 0,
+                "display_merchant_wallet_page": 1,
+                "self_pickup_order_whitelist": 1,
+                "hide_merchant_wallet_page": 0,
+                "saver_delivery_merchant_blacklist": 0,
+                "prepare_food_noti_blacklist": 0,
+                "schedule_order_blacklist_merchant": 0,
+                "sdp_sku_recommendation_blacklist": 0,
+                "merchant_score_blacklist": 0,
+                "chat_room_blacklist_merchant": 0,
+                "group_order_blacklist": 0,
+                "merchant_score_whitelist": 0,
+                "id_seller_loan_store_whitelist": 0,
+                "description_translation_blacklist": 0,
+                "auto_chargeback_blacklist": 0,
+                "ads_credit_deduction": 0,
+                "block_mff_buyer_self_cancellation_blacklist": 0,
+                "is_support_cheap_meal_self_pickup": 1,
+                "ads_credit_tc_popup_whitelist": 0,
+                "short_hub_merchant_blacklist": 0,
+                "self_pickup_display_blacklist": 0
+            },
+            "modify_order_mode": 3,
+            "menu_editor": "",
+            "dff_mode": 1,
+            "dff_setting": 3,
+            "timezone": "Asia/Jakarta",
+            "status_reasons": [],
+            "store_type": 1,
+            "store_growth_status": 1,
+            "settle_to": 1,
+            "logo_type": 4,
+            "banner_type": 4,
+            "pickup_order_toggle": 1,
+            "pickup_order_commission_rate": 2500,
+            "delivery_mode": 0,
+            "print_bill_type": 2,
+            "is_preferred_merchant": 0
+        },
+        "opening_status": {
+            "display_opening_status": 3,
+            "order_enabled": 0,
+            "current_opening_time": {
+                "start_relative_sec": 28800,
+                "end_relative_sec": 79200
+            },
+            "next_opening_time": {
+                "start_relative_sec": 115200,
+                "end_relative_sec": 165600
+            },
+            "opening_status": 3,
+            "pause_time": {
+                "pause_start_time": 1783781870416,
+                "pause_end_time": 1783783670417,
+                "pause_type": 1,
+                "special_mode": null,
+                "pause_types_v2": [
+                    1
+                ],
+                "general_rule_id": 0
+            },
+            "close_status": {}
+        },
+        "area": {
+            "id": "6",
+            "status": 1,
+            "service_type_flag": {
+                "food_enabled": 1,
+                "spx_instant_shopee_enabled": 1,
+                "spx_instant_enabled": 1,
+                "spx_sameday_shopee_enabled": 1,
+                "spx_instant_warehouse_enabled": 0
+            }
+        }
+    }
+}

@@ -1,0 +1,84 @@
+{
+    "errorCode": 0,
+    "errorMsg": "",
+    "data": {
+        "reportInfoList": [
+            {
+                "reportId": 171365,
+                "reportName": "Transactions_10042026_09052026_ShopeeFood.xlsx",
+                "downLoadUrl": "https://s3.partner.shopee.co.id/uss_access/c3/82483966/mss-backend/BElEXzGN5wDE06g1eBEgBgAn.xlsx?ext=xlsx\u0026file=VHJhbnNhY3Rpb25zXzEwMDQyMDI2XzA5MDUyMDI2X1Nob3BlZUZvb2QueGxzeA\u0026sign=1778342124-6QvfE-0-761e366a7313ad50d40100d124e27338\u0026st=uss",
+                "reportStatus": 2,
+                "errMsg": "",
+                "filterData": "{\"txnId\":\"\",\"selectedStatus\":6,\"selectedEntities\":1,\"selectedStoreIds\":0,\"selectedRoleIds\":0,\"selectedMerchantIds\":0,\"keyword\":\"\",\"externalReferenceID\":\"\",\"additionalInfo\":\"\",\"recipientPhoneNumber\":\"\"}",
+                "reportType": 2,
+                "serviceList": [
+                    2
+                ],
+                "haveDownloaded": 0,
+                "createTime": 1778341524,
+                "updateTime": 1778341524
+            },
+            {
+                "reportId": 171364,
+                "reportName": "Transactions_01022026_28022026_ShopeeFood.xlsx",
+                "downLoadUrl": "https://s3.partner.shopee.co.id/uss_access/c3/82483966/mss-backend/BElEXzEIpQCk66E1eBEdBgAn.xlsx?ext=xlsx\u0026file=VHJhbnNhY3Rpb25zXzAxMDIyMDI2XzI4MDIyMDI2X1Nob3BlZUZvb2QueGxzeA\u0026sign=1778342011-UyC0j-0-5e0793071bdf2a0fa626c8e5d3a8276c\u0026st=uss",
+                "reportStatus": 2,
+                "errMsg": "",
+                "filterData": "{\"txnId\":\"\",\"selectedStatus\":6,\"selectedEntities\":1,\"selectedStoreIds\":0,\"selectedRoleIds\":0,\"selectedMerchantIds\":0,\"keyword\":\"\",\"externalReferenceID\":\"\",\"additionalInfo\":\"\",\"recipientPhoneNumber\":\"\"}",
+                "reportType": 2,
+                "serviceList": [
+                    2
+                ],
+                "haveDownloaded": 0,
+                "createTime": 1778341411,
+                "updateTime": 1778341411
+            },
+            {
+                "reportId": 171363,
+                "reportName": "Transactions_01032026_31032026_ShopeeFood.xlsx",
+                "downLoadUrl": "https://s3.partner.shopee.co.id/uss_access/c3/82483966/mss-backend/BElEXzEbqADQ2qE1eBE6BAAn.xlsx?ext=xlsx\u0026file=VHJhbnNhY3Rpb25zXzAxMDMyMDI2XzMxMDMyMDI2X1Nob3BlZUZvb2QueGxzeA\u0026sign=1778342010-I5OYa-0-9c4db184b07c5e6942c4b6fb5f3da8f0\u0026st=uss",
+                "reportStatus": 2,
+                "errMsg": "",
+                "filterData": "{\"txnId\":\"\",\"selectedStatus\":6,\"selectedEntities\":1,\"selectedStoreIds\":0,\"selectedRoleIds\":0,\"selectedMerchantIds\":0,\"keyword\":\"\",\"externalReferenceID\":\"\",\"additionalInfo\":\"\",\"recipientPhoneNumber\":\"\"}",
+                "reportType": 2,
+                "serviceList": [
+                    2
+                ],
+                "haveDownloaded": 0,
+                "createTime": 1778341410,
+                "updateTime": 1778341410
+            },
+            {
+                "reportId": 171362,
+                "reportName": "Transactions_01042026_30042026_ShopeeFood.xlsx",
+                "downLoadUrl": "https://s3.partner.shopee.co.id/uss_access/c3/82483966/mss-backend/BElEXzEHpQBYyaE1eBEeAAAn.xlsx?ext=xlsx\u0026file=VHJhbnNhY3Rpb25zXzAxMDQyMDI2XzMwMDQyMDI2X1Nob3BlZUZvb2QueGxzeA\u0026sign=1778342009-K5C7Q-0-75c7ebb22274abc6d7da01e1e7446763\u0026st=uss",
+                "reportStatus": 2,
+                "errMsg": "",
+                "filterData": "{\"txnId\":\"\",\"selectedStatus\":6,\"selectedEntities\":1,\"selectedStoreIds\":0,\"selectedRoleIds\":0,\"selectedMerchantIds\":0,\"keyword\":\"\",\"externalReferenceID\":\"\",\"additionalInfo\":\"\",\"recipientPhoneNumber\":\"\"}",
+                "reportType": 2,
+                "serviceList": [
+                    2
+                ],
+                "haveDownloaded": 0,
+                "createTime": 1778341409,
+                "updateTime": 1778341409
+            },
+            {
+                "reportId": 171361,
+                "reportName": "Transactions_10042026_09052026_ShopeeFood.xlsx",
+                "downLoadUrl": "https://s3.partner.shopee.co.id/uss_access/c3/82483966/mss-backend/BElEXzGYuwCMXJw1eBE1AAAn.xlsx?ext=xlsx\u0026file=VHJhbnNhY3Rpb25zXzEwMDQyMDI2XzA5MDUyMDI2X1Nob3BlZUZvb2QueGxzeA\u0026sign=1778341920-BEIF3-0-96e36dbe63ae8674615ef0bfbee2701b\u0026st=uss",
+                "reportStatus": 2,
+                "errMsg": "",
+                "filterData": "{\"txnId\":\"\",\"selectedStatus\":6,\"selectedEntities\":1,\"selectedStoreIds\":0,\"selectedRoleIds\":0,\"selectedMerchantIds\":0,\"keyword\":\"\",\"externalReferenceID\":\"\",\"additionalInfo\":\"\",\"recipientPhoneNumber\":\"\"}",
+                "reportType": 2,
+                "serviceList": [
+                    2
+                ],
+                "haveDownloaded": 0,
+                "createTime": 1778341320,
+                "updateTime": 1778341320
+            }
+        ],
+        "total": 67
+    }
+}

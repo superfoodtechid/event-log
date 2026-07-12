@@ -1,0 +1,55 @@
+# Ignore virtual environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Ignore credentials and captured logs
+credentials.json
+captured_logs/
+
+# Ignore specific session/stats files
+data/session.json
+data/warmer_stats.json
+
+# Ignore all session files except the one used (allvbadmin)
+data/session_*.json
+!data/session_allvbadmin.json
+
+# Ignore all other Chrome profiles (matches both symlinks and directories)
+data/chrome_profile
+data/chrome_profile_auto*
+data/chrome_profile_superfoodapp
+
+# Whitelist rules for data/chrome_profile_allvbadmin/
+# First, ignore everything directly under chrome_profile_allvbadmin
+data/chrome_profile_allvbadmin/*
+
+# Whitelist Local State, profile_allvbadmin, and Default directory
+!data/chrome_profile_allvbadmin/Local State
+!data/chrome_profile_allvbadmin/profile_allvbadmin/
+!data/chrome_profile_allvbadmin/Default/
+
+# Ignore everything inside Default except Preferences
+data/chrome_profile_allvbadmin/Default/*
+!data/chrome_profile_allvbadmin/Default/Preferences
+
+# Ignore everything inside profile_allvbadmin except specific files and folders
+data/chrome_profile_allvbadmin/profile_allvbadmin/*
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Cookies
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Cookies-journal
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Preferences
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Secure Preferences
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Local Storage/
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Session Storage/
+
+# Keep all files under Local Storage and Session Storage
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Local Storage/*
+!data/chrome_profile_allvbadmin/profile_allvbadmin/Session Storage/*
+
+# Explicitly ensure lock/temp/cache files are never committed
+**/LOCK
+**/LOG
+**/LOG.old
+**/DevToolsActivePort
+**/BrowserMetrics-spare.pma

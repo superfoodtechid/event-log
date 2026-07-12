@@ -1,0 +1,92 @@
+equest URL
+https://api.partner.shopee.co.id/nb/mss/mer-detect-api/PartnerMerchantDetectServer/SwitchMerchant
+Request Method
+POST
+Status Code
+200 OK
+Remote Address
+103.70.17.192:443
+Referrer Policy
+strict-origin-when-cross-origin
+a-rsp-cache
+false
+a-rsp-code
+0
+a-rsp-err-msg
+success
+a-rsp-msg
+ok
+a-rsp-timestamp
+1778578385
+a-rsp-traceid
+27c1dab3300ade063404deb67b2d460a-gateway
+access-control-allow-credentials
+true
+access-control-allow-headers
+content-type,shopee-baggage,x-merchant-requestid,x-merchant-timezone,x-merchant-language,x-merchant-token,x-merchant-toc-nonce,x-merchant-tob-nonce,x-merchant-from,x-merchant-login-from,x-merchant-tob-clientid,x-merchant-toc-userid,x-merchant-tob-userid,x-merchant-merchantid,x-merchant-storeid,x-merchant-googletoken,x-merchant-timestamp,x-merchant-sign,a-sma,x-merchant-duplication-check,a-appversion,x-merchant-pii
+access-control-allow-methods
+POST, GET, PUT, DELETE, OPTIONS
+access-control-allow-origin
+https://partner.shopee.co.id
+content-length
+408
+content-type
+application/json
+date
+Tue, 12 May 2026 09:33:05 GMT
+server
+SGW
+:authority
+api.partner.shopee.co.id
+:method
+POST
+:path
+/nb/mss/mer-detect-api/PartnerMerchantDetectServer/SwitchMerchant
+:scheme
+https
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+en-US,en;q=0.9
+content-length
+31
+content-type
+application/json
+origin
+https://partner.shopee.co.id
+priority
+u=1, i
+referer
+https://partner.shopee.co.id/
+sec-ch-ua
+"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Linux"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-site
+shopee-baggage
+PFB=undefined
+user-agent
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36
+x-merchant-from
+12
+x-merchant-language
+id
+x-merchant-login-from
+12
+x-merchant-requestid
+582ba9ef-ac07-444c-9b01-313e993520e5
+x-merchant-timezone
+Asia/Jakarta
+x-merchant-tob-clientid
+undefined
+x-merchant-token
+B:EUra/wMwHMemQOsELzQDcv6uhxe+UQFfQ2Fz6ypNM5wBrAljjvFE6Ewc8iGo6eAdSN+k7bo2U8Z51EOF4SI4yM/VD4EgPuDxUBZR8nU1XhDffAPFkvJ1QlGYgQOWnIfvmJwMsMJf/ZIGmwHv5i1jx62a/o6zZvadmwPLEGdQdj0FFi1JWsinStkL9efvj7TLifyi0V75ndu8YtfVZIgRHEcmelUxwoUp7xQuKtg=

@@ -1,0 +1,16 @@
+{filter: {reportTypeList: [2], serviceList: [2]}, pageNo: 1, pageSize: 5}
+filter
+: 
+{reportTypeList: [2], serviceList: [2]}
+reportTypeList
+: 
+[2]
+serviceList
+: 
+[2]
+pageNo
+: 
+1
+pageSize
+: 
+5

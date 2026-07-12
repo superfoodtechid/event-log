@@ -1,0 +1,38 @@
+{
+    "data": {
+        "tobUserId": 8103302917,
+        "role": 2,
+        "phone": "6285136517286",
+        "userName": "allvbadmin",
+        "merchantId": 1100395,
+        "haveMerchantHost": false,
+        "merchantLogo": "",
+        "merchantName": "Depot Baru Rasa_",
+        "lastChangePwdTime": 1772708699,
+        "isMerchantHost": false,
+        "serviceList": [
+            2,
+            1
+        ],
+        "productList": [
+            101,
+            1,
+            2,
+            4,
+            6
+        ],
+        "language": "id",
+        "tocUserName": "allvbadmin",
+        "tocEmail": "ofd.superfood@gmail.com",
+        "tocPhone": "6285136517286",
+        "isLinkedTocUser": true,
+        "tocUid": 1475753836,
+        "scope": 1,
+        "partnerType": 3,
+        "whitelistStatus": 0,
+        "shopeepay_service_status": 1,
+        "store_id": 1411755
+    },
+    "errorCode": 0,
+    "errorMsg": ""
+}
